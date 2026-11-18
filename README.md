@@ -76,6 +76,9 @@ Step 3 delivered ~48 000 messages in 10 s, then 100-850 msg/s for ~5 min, with 2
 - With ArmoniK on a fresh subscription: ~5000-5600 msg/s held for 14 min, ~6000 msg/s collapsed after ~2 min.
 - Under continuous publishing, a collapsed subscription stayed slow from 45 min to ~3 h. `seek` did not help;
   deleting and recreating it did. Other subscriptions of the project were not affected.
+- Publishing and consuming at the same time on a collapsed subscription stays at ~170-200 msg/s from the start, with
+  no fast phase first: with ArmoniK, ~170 tasks/s ended while clients submitted up to ~9000/s, the backlog reaching
+  ~600 000-700 000 in 2.5 min. Same with two Core versions.
 - StreamingPull (one `SubscriberClient` per consumer, flow control 1, 200 ms before the ack) drained a subscription
   just collapsed in unary Pull at ~3400 msg/s, while unary Pull collapsed again right after: the degraded state hits
   unary Pull only. StreamingPull above ~6000 msg/s sustained is not tested yet.
